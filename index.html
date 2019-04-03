@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Crystal Collector Game</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    <style type="text/css">
+      
+      .crystal-image1,
+      .crystal-image2,
+      .crystal-image3,
+      .crystal-image4 {
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+</head>
+<body>
+    <div class = "container">
+    
+      <div class = "row">
+          <div class="col-12">
+        <h1>CrystalsCollector!</h1>
+          </div>
+      </div>
+
+      <br>
+
+      <div class = "row">
+        <div class = "col-6">
+          <p>You will be given a random number at the start of the game.</p>
+          <p>There are four crystals below. By clicking on a crystal you will add a specific amount of points to your total score.</p>
+          <p>You win the game by matching your total score to random number, you lose the game if your total score goes above the random number.</p>
+          <p>The value of each crystal is hidden from you until you click on it.</p>
+          <p>Each time when the game starts, the game will change the values of each crystal.</p>
+        </div>
+      </div>
+   <div class = "number-to-guess">
+    <h5>Target Score: <span id="random-num"></span></h5>
+    </div>
+  <div class = "counter">
+    <h5> Counter: <span id="updated-score"></span></h5>
+    </div>
+    <h5>Wins: <span id="wins"></span></h5>
+    <h5>Losses: <span id="losses"></span></h5>
+    
+    <div id="crystals">
+
+      <!-- We gave our crystal image the class ".crystal-image" to apply the resize-->
+      <img class="crystal-image1" src="https://cdn1.iconfinder.com/data/icons/crystal-1/60/purple_crystal-512.png" alt="Purple Crystal">
+      <img class="crystal-image2" src="https://cdn1.iconfinder.com/data/icons/crystal-1/60/blue_crystal-512.png" alt="Blue Crystal">
+      <img class="crystal-image3" src="https://mastergolflivestream.com/images/crystal-clipart-quartz-16.png" alt="Dark Pink Crystal">
+      <img class="crystal-image4" src="https://cdn1.iconfinder.com/data/icons/crystal-1/60/pink_crystal-512.png" alt="Light Pink Crystal">
+    </div>
+    
+      <!-- Here we have div called "random-number" where our random number will go -->
+    <h1 class="text-center" id="random-number"></h1>
+
+
+
+    <!-- JAVASCRIPT  -->
+  <!-- ========================================= -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script type="text/javascript">
+  $(document).ready(function() {
+  
+  function randomInRange(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  var target = randomInRange(19, 120);
+
+  $("#random-num").text(target);
+
+  var test = Math.floor(Math.random()*11+1);
+
+  var counter = 0;  
+
+  $("#updated-score").text(counter);
+
+  var numberOptions = [
+    randomInRange (1, 12),
+    randomInRange (1, 12),
+    randomInRange (1, 12),
+    randomInRange (1, 12),
+  ];
+
+   // We start the game with a score of 0.
+  var wins = 0;
+  var losses = 0;
+
+  $("#wins").text(wins);
+  $("#losses").text(losses);
+
+  // for (var i = 0; i < numberOptions.length; i++) {
+  //   var imageCrystal = $("<img>");
+  //   imageCrystal.attr("data-crystalvalue", numberOptions[i]);
+  // }
+  
+  //   $("#crystals").on("click", function() {
+  //     var crystalValue = ($(this).attr("data-crystalvalue"));
+  //     crystalValue = parseInt(crystalValue);
+  //     counter += crystalValue;
+  // });
+
+    $("img").on("click", function() {
+      counter = counter + test;
+      $("#updated-score").text(counter);
+    });
+  
+
+    // function initializeGame() {
+    //     totalScore = "";
+    //     secondNumber = "";
+    //     operator = "";
+    //     isOperatorChosen = false;
+    //     isCalculated = false;
+
+    //     $("#first-number, #second-number, #operator, #result").empty();
+    //   }
+
+
+    // Function that updates the score...
+    // function updateScore() {
+    //   document.querySelector("#score").innerHTML = "Score: " + score;
+    // }
+
+
+    if (counter === target) {
+      alert("You win!");
+        wins++;
+    }
+
+    else if (counter >= target) {
+      alert("You lose!!");
+        losses++;
+    }
+
+  // $(".clear").on("click", function() {
+
+  //   // Call initializeCalculater so we can reset the state of our app
+  //   initializeGame();
+
+  // });
+
+
+
+
+  });
+    </script>
+</body>
+</html>
